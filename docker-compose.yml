@@ -1,0 +1,26 @@
+version: '3.7'
+
+services:
+  vscode:
+    build:
+        context: .
+        dockerfile: ./docker/vscode.Dockerfile
+    container_name: vscode
+    volumes:
+      - ./app:/home/coder/project
+      - shared:/shared
+    ports:
+      - "8080:8080"
+    environment:
+      - PASSWORD=yourpassword
+
+  node:
+    image: node:16
+    container_name: node
+    volumes:
+      - shared:/app
+    working_dir: /app
+    command: bash
+
+volumes:
+  shared:
